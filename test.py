@@ -5,25 +5,82 @@ import random
 
 def main():
     st.set_page_config(page_title="Belajar SQL", layout="wide")
-    
+
+    # Header Aplikasi
     st.title("🗄️ Pembelajaran Interaktif: SQL")
+    st.image("https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png", width=100)
+    st.write("Pelajari SQL dengan mudah dan interaktif!")
+
+    # Navigasi
     st.sidebar.header("Navigasi")
     pilihan = st.sidebar.radio("Pilih Topik:", [
-        "Pengantar", "SELECT", "WHERE", "ORDER BY", "GROUP BY", "HAVING", 
+        "Pengantar", "Materi", "SELECT", "WHERE", "ORDER BY", "GROUP BY", "HAVING", 
         "INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL OUTER JOIN", "INSERT", "UPDATE", "DELETE",
         "DISTINCT", "LIMIT", "ALIAS", "UNION", "CASE", "EXISTS", "SUBQUERY"
     ])
     
     if pilihan == "Pengantar":
         show_pengantar()
+    elif pilihan == "Materi":
+        show_materi()
     else:
         show_sql_section(pilihan)
 
 def show_pengantar():
-    st.header("Selamat Datang di Pembelajaran SQL!")
+    st.header("📖 Selamat Datang di Pembelajaran SQL!")
     st.write("""
-    **Apa itu SQL?**  
-    SQL (Structured Query Language) adalah bahasa pemrograman yang digunakan untuk mengakses, mengelola, dan memanipulasi database. 
+    SQL (*Structured Query Language*) adalah bahasa yang digunakan untuk berinteraksi dengan database.
+    Dengan SQL, kita dapat **mengambil data**, **memasukkan data baru**, **memperbarui**, dan **menghapus** informasi dari database.
+    """)
+   
+    # Toggle untuk Konsep Dasar Data Base
+    with st.expander("📌 **Konsep Dasar Data Base**"):
+        st.markdown("""
+        Basis data adalah kumpulan data terstruktur yang disimpan dalam sistem komputer. Proses organisasi data melibatkan komponen utama berupa **tabel** yang terdiri dari **baris(record)** dan **kolom(field)**. Basis data dapat bekerja pada lebih dari satu tabel yang memiliki hubungan tertentu.
+        """)
+ 
+    # Toggle untuk Sejarah Singkat SQL
+    with st.expander("📌 **Sejarah Singkat SQL**"):
+         st.markdown("""
+         SQL ditetapkan menjadi standar bahasa pengolahan basis data oleh American National Standards Institute (ANSI) pada 1986. Kemudian pada tahun 1987 ditetapkan menjadi bahasa standar oleh International Organization for Standardization (ISO). Salah satu aplikasi populer yang menggunakan SQL adalah MySQL. 
+         """)
+
+    # Toggle untuk Jenis Perintah SQL
+    with st.expander("📌 **Jenis-Jenis Perintah Berbasis SQL**"):
+        st.markdown("""
+        - **Data Definition Language (DDL)** → Mengelola struktur database (**CREATE, ALTER, DROP**).
+        - **Data Manipulation Language (DML)** → Memanipulasi data (**INSERT, UPDATE, DELETE, SELECT**).
+        - **Data Control Language (DCL)** → Mengatur hak akses (**GRANT, REVOKE**).
+        - **Transaction Control Language (TCL)** → Mengelola transaksi (**COMMIT, ROLLBACK**).
+        """)
+
+    # Toggle untuk Penggunaan SQL
+    with st.expander("📌 **Penggunaan SQL**"):
+        st.markdown("""
+	- mengambil data dari database dengan cepat.
+	- menyisipkan record (baris) dalam database.
+	- mengupdate record (baris) dalam database.
+	- menghapus record (baris) dalam database.
+	- membuat database baru.
+	- mengatur izin akses pada tabel,
+	- mengatur izin akses pada tabel, prosedur, dan view.
+      """)
+
+def show_materi():
+    st.header("📚 Materi SQL")
+    st.write("""
+    Di sini Anda dapat mempelajari berbagai konsep dasar SQL lebih dalam.
+    
+    **🔹 1. SELECT**  
+    Perintah `SELECT` digunakan untuk mengambil data dari tabel.
+
+    **🔹 2. WHERE**  
+    Perintah `WHERE` digunakan untuk memfilter data berdasarkan kondisi tertentu.
+
+    **🔹 3. ORDER BY**  
+    Digunakan untuk mengurutkan data dalam hasil query.
+
+    Untuk lebih lengkapnya, pilih topik dari navigasi di sebelah kiri.
     """)
 
 def generate_sample_data(include_orders=False):
@@ -51,33 +108,11 @@ def generate_sample_data(include_orders=False):
 
 def show_sql_section(title):
     descriptions = {
-        "SELECT": "Mengambil data dari tabel dalam database.",
-        "WHERE": "Memfilter data berdasarkan kondisi tertentu.",
-        "ORDER BY": "Mengurutkan hasil query berdasarkan kolom tertentu.",
-        "GROUP BY": "Mengelompokkan data berdasarkan satu atau lebih kolom.",
-        "HAVING": "Menyaring hasil setelah GROUP BY.",
-        "INNER JOIN": "Menggabungkan dua tabel berdasarkan nilai yang cocok di kedua tabel.",
-        "LEFT JOIN": "Mengembalikan semua data dari tabel kiri dan data yang cocok dari tabel kanan.",
-        "RIGHT JOIN": "Mengembalikan semua data dari tabel kanan dan data yang cocok dari tabel kiri.",
-        "FULL OUTER JOIN": "Mengembalikan semua data dari kedua tabel, mencocokkan nilai jika ada.",
-        "INSERT": "Menambahkan data baru ke dalam tabel.",
-        "UPDATE": "Memperbarui data dalam tabel.",
-        "DELETE": "Menghapus data dari tabel.",
-        "DISTINCT": "Menampilkan hanya nilai unik dalam suatu kolom.",
-        "LIMIT": "Membatasi jumlah baris yang dikembalikan oleh query.",
-        "ALIAS": "Memberikan nama sementara pada kolom atau tabel.",
-        "UNION": "Menggabungkan hasil dari dua atau lebih query SELECT.",
-        "CASE": "Membuat kondisi dalam query SQL.",
-        "EXISTS": "Memeriksa keberadaan data dalam subquery.",
-        "SUBQUERY": "Menjalankan query dalam query lainnya."
-    }
-    
-    quiz_queries = {
-        "SELECT": "SELECT Name FROM Customers LIMIT 5;",
-        "WHERE": "SELECT * FROM Customers WHERE Age > 40;",
-        "ORDER BY": "SELECT * FROM Customers ORDER BY Age DESC LIMIT 5;",
-        "GROUP BY": "SELECT City, COUNT(*) FROM Customers GROUP BY City;",
-        "HAVING": "SELECT City, COUNT(*) FROM Customers GROUP BY City HAVING COUNT(*) > 3;"
+        "SELECT": "Mengambil data dari tabel dalam database.\n\nContoh: `SELECT * FROM Customers;` akan mengambil semua data dari tabel Customers.",
+        "WHERE": "Memfilter data berdasarkan kondisi tertentu.\n\nContoh: `SELECT * FROM Customers WHERE Age > 30;` akan mengambil data pelanggan yang berusia di atas 30.",
+        "ORDER BY": "Mengurutkan hasil query berdasarkan kolom tertentu.\n\nContoh: `SELECT * FROM Customers ORDER BY Name ASC;` akan mengurutkan pelanggan berdasarkan nama secara naik.",
+        "GROUP BY": "Mengelompokkan data berdasarkan satu atau lebih kolom.\n\nContoh: `SELECT City, COUNT(*) FROM Customers GROUP BY City;` akan menghitung jumlah pelanggan per kota.",
+        "HAVING": "Menyaring hasil setelah GROUP BY.\n\nContoh: `SELECT City, COUNT(*) FROM Customers GROUP BY City HAVING COUNT(*) > 3;` akan menampilkan hanya kota dengan lebih dari 3 pelanggan."
     }
     
     include_orders = title in ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL OUTER JOIN"]
@@ -85,27 +120,26 @@ def show_sql_section(title):
     
     st.header(f"🔍 {title} dalam SQL")
     st.write(descriptions.get(title, ""))
-    
+
     st.subheader("📋 Data Sebelum Dieksekusi")
     df_customers = pd.read_sql_query("SELECT * FROM Customers;", conn)
     st.dataframe(df_customers)
-    
+
     if include_orders:
         df_orders = pd.read_sql_query("SELECT * FROM Orders;", conn)
         st.write("**Orders Table:**")
         st.dataframe(df_orders)
+
+    st.subheader("📝 Jalankan Query SQL Anda Sendiri")
+    user_query = st.text_area("Masukkan Query SQL Anda:", "SELECT * FROM Customers;")
     
-    st.subheader("📝 Kuis")
-    st.write("Jalankan query berikut dan lihat hasilnya:")
-    st.code(quiz_queries.get(title, "SELECT * FROM Customers;"), language='sql')
-    
-    if st.button("Run Quiz Query"):
+    if st.button("Jalankan Query"):
         st.subheader("📊 Hasil Setelah Eksekusi")
         try:
-            result = pd.read_sql_query(quiz_queries.get(title, "SELECT * FROM Customers;"), conn)
+            result = pd.read_sql_query(user_query, conn)
             st.dataframe(result)
         except Exception as e:
             st.error(f"Terjadi kesalahan: {e}")
-    
+
 if __name__ == "__main__":
     main()
